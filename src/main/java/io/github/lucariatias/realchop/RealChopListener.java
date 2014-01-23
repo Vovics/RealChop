@@ -365,7 +365,8 @@ public class RealChopListener implements Listener {
 			} else {
 				face = 0x4;
 			}
-			FallingBlock blockFalling = world.spawnFallingBlock(newBlockLocation, logBlockType, (byte) ((3 & logBlockData.getData()) | face));
+			@SuppressWarnings("deprecation")
+			FallingBlock blockFalling = world.spawnFallingBlock(newBlockLocation, logBlockType, (byte) ((3 & logBlockData.getData()) | face)); //TODO: Find a way to do this without using deprecated methods
 			blockFalling.setVelocity(direction.clone().multiply(horisontalSpeed));
 
 			// calc clear falling way
@@ -471,7 +472,8 @@ public class RealChopListener implements Listener {
 			}
 			leavesBlock.setType(Material.AIR);
 			leavesBlock.removeMetadata("TreeId", plugin);
-			FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, Material.LEAVES, (byte) ((0x3 & leavesBlockData.getData()) | 0x8));
+			@SuppressWarnings("deprecation")
+			FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, Material.LEAVES, (byte) ((0x3 & leavesBlockData.getData()) | 0x8)); //TODO: Find a way to do this without using deprecated methods
 			// FallingBlock blockFalling =
 			// world.spawnFallingBlock(leavesLocation, Material.LEAVES,
 			// (byte)(leavesBlockData | 0x4));
