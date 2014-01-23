@@ -1,0 +1,5 @@
+name: ${project.name}
+main: io.github.lucariatias.realchop.RealChop
+version: ${project.version}
+description: ${project.description}
+authors: [Vovic, Lucariatias]

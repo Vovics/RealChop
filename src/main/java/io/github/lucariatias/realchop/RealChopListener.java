@@ -1,4 +1,4 @@
-package realChop;
+package io.github.lucariatias.realchop;
 
 import org.bukkit.World;
 import org.bukkit.Location;

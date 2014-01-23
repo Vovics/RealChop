@@ -1,4 +1,4 @@
-package realChop;
+package io.github.lucariatias.realchop;
 
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.configuration.file.FileConfiguration;
