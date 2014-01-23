@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
 import org.bukkit.Material;
+import org.bukkit.material.MaterialData;
 import org.bukkit.metadata.*;
 import org.bukkit.event.Listener;
 import org.bukkit.event.EventHandler;
@@ -13,6 +14,7 @@ import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.util.Vector;
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -275,8 +277,9 @@ public class RealChopListener implements Listener {
 			// if (newBlockLocation == breakBlockLocation) continue;
 			Block logBlock = logPairs.getValue();
 			Material logBlockType = logBlock.getType();
-			byte logBlockData = logBlock.getData();
-			logBlock.setTypeId(0);
+			// byte logBlockData = logBlock.getData();
+			MaterialData logBlockData = logBlock.getState().getData();
+			logBlock.setType(Material.AIR);
 			logBlock.removeMetadata("TreeId", plugin);
 
 			int horisontalDistance = newBlockLocation.getBlockY() - breakBlockLocation.getBlockY() - 1;
@@ -362,7 +365,8 @@ public class RealChopListener implements Listener {
 			} else {
 				face = 0x4;
 			}
-			FallingBlock blockFalling = world.spawnFallingBlock(newBlockLocation, logBlockType, (byte) ((3 & logBlockData) | face));
+			@SuppressWarnings("deprecation")
+			FallingBlock blockFalling = world.spawnFallingBlock(newBlockLocation, logBlockType, (byte) ((3 & logBlockData.getData()) | face)); //TODO: Find a way to do this without using deprecated methods
 			blockFalling.setVelocity(direction.clone().multiply(horisontalSpeed));
 
 			// calc clear falling way
@@ -429,7 +433,8 @@ public class RealChopListener implements Listener {
 			Location leavesLocation = leavesPairs.getKey();
 			Block leavesBlock = leavesPairs.getValue();
 			Material leavesMaterial = leavesBlock.getType();
-			byte leavesBlockData = leavesBlock.getData();
+			// byte leavesBlockData = leavesBlock.getData();
+			MaterialData leavesBlockData = leavesBlock.getState().getData();
 			if (leavesMaterial != Material.LEAVES)
 				continue;
 
@@ -458,16 +463,17 @@ public class RealChopListener implements Listener {
 					Block tempBlock = world.getBlockAt(tempLocation);
 					if (tempBlock.getType() != Material.AIR && tempBlock.getType() != Material.WATER && tempBlock.getType() != Material.STATIONARY_WATER) {
 						leavesBlock.removeMetadata("TreeId", plugin);
-						leavesBlock.setData((byte) ((0x3 & leavesBlockData) | 0x8));
+						//leavesBlock.setData((byte) ((0x3 & leavesBlockData) | 0x8));
 						// player.sendMessage("Ignore!");
 						continue;
 					}
 				}
 				// player.sendMessage(tempLocation + " " + breakBlockLocation);
 			}
-			leavesBlock.setTypeId(0);
+			leavesBlock.setType(Material.AIR);
 			leavesBlock.removeMetadata("TreeId", plugin);
-			FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, Material.LEAVES, (byte) ((0x3 & leavesBlockData) | 0x8));
+			@SuppressWarnings("deprecation")
+			FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, Material.LEAVES, (byte) ((0x3 & leavesBlockData.getData()) | 0x8)); //TODO: Find a way to do this without using deprecated methods
 			// FallingBlock blockFalling =
 			// world.spawnFallingBlock(leavesLocation, Material.LEAVES,
 			// (byte)(leavesBlockData | 0x4));
