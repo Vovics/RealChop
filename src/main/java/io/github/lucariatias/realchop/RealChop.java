@@ -39,7 +39,7 @@ public class RealChop extends JavaPlugin {
 			header += "  Process LEAVES blocks, or just LOG blocks." + eol;
 			header += "  default: false" + eol;
 			config.options().header(header);
-			this.saveConfig();
+			saveConfig();
 		}
 		getServer().getPluginManager().registerEvents(new RealChopListener(this), this);
 	}
