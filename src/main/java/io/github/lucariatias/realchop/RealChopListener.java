@@ -276,7 +276,7 @@ public class RealChopListener implements Listener {
 			Block logBlock = logPairs.getValue();
 			Material logBlockType = logBlock.getType();
 			byte logBlockData = logBlock.getData();
-			logBlock.setTypeId(0);
+			logBlock.setType(Material.AIR);
 			logBlock.removeMetadata("TreeId", plugin);
 
 			int horisontalDistance = newBlockLocation.getBlockY() - breakBlockLocation.getBlockY() - 1;
@@ -465,7 +465,7 @@ public class RealChopListener implements Listener {
 				}
 				// player.sendMessage(tempLocation + " " + breakBlockLocation);
 			}
-			leavesBlock.setTypeId(0);
+			leavesBlock.setType(Material.AIR);
 			leavesBlock.removeMetadata("TreeId", plugin);
 			FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, Material.LEAVES, (byte) ((0x3 & leavesBlockData) | 0x8));
 			// FallingBlock blockFalling =
