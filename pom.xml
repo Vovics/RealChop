@@ -1,16 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.lucariatias</groupId>
     <artifactId>realchop</artifactId>
-    <version>0.8.1-SNAPSHOT</version>
+    <version>0.8.1</version>
     <name>RealChop</name>
     <description>RealChop plugin for Bukkit</description>
     <scm>
         <connection>scm:git:https://github.com/Vovics/RealChop.git</connection>
         <url>https://github.com/Vovics/RealChop</url>
         <developerConnection>scm:git:https://github.com/Vovics/RealChop.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>v0.8.1</tag>
     </scm>
     <repositories>
         <repository>
