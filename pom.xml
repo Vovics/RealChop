@@ -2,14 +2,14 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.github.lucariatias</groupId>
     <artifactId>realchop</artifactId>
-    <version>0.8.1</version>
+    <version>0.8.2-SNAPSHOT</version>
     <name>RealChop</name>
     <description>RealChop plugin for Bukkit</description>
     <scm>
         <connection>scm:git:https://github.com/Vovics/RealChop.git</connection>
         <url>https://github.com/Vovics/RealChop</url>
         <developerConnection>scm:git:https://github.com/Vovics/RealChop.git</developerConnection>
-        <tag>v0.8.1</tag>
+        <tag>HEAD</tag>
     </scm>
     <repositories>
         <repository>
