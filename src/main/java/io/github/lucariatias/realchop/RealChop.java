@@ -8,6 +8,7 @@ import java.io.File;
 public class RealChop extends JavaPlugin {
 	public FileConfiguration config;
 
+    @Override
 	public void onEnable() {
 		config = this.getConfig();
 		config.options().configuration().addDefault("DetectBlockBreak", "all");
@@ -44,7 +45,4 @@ public class RealChop extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new RealChopListener(this), this);
 	}
 
-	public void onDisable() {
-		// getLogger().info("Your plugin has been disabled!");
-	}
 }
