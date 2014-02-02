@@ -1,43 +1,39 @@
 package io.github.lucariatias.realchop;
 
-import org.bukkit.World;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.Material;
-import org.bukkit.material.MaterialData;
-import org.bukkit.metadata.*;
-import org.bukkit.event.Listener;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.*;
-import org.bukkit.event.world.StructureGrowEvent;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.FallingBlock;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.LeavesDecayEvent;
+import org.bukkit.event.world.StructureGrowEvent;
+import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.util.Vector;
 
-import java.util.Map;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.Map;
 import java.util.logging.Level;
 
 public class RealChopListener implements Listener {
-    private RealChop plugin;
-    boolean configDetectBlockBreakLog;
-    boolean configDetectBlockBreakLeaves;
-    boolean configDetectBlockBreakAll;
-    boolean configFallingLeaves;
-    int configBlockProcessingLimit;
 
-    public RealChopListener(RealChop instance) {
-        plugin = instance;
-        configDetectBlockBreakLog = true;
+    private final RealChop plugin;
+    private boolean configDetectBlockBreakLeaves;
+    private boolean configDetectBlockBreakAll;
+    private boolean configFallingLeaves;
+    private int configBlockProcessingLimit;
+
+    public RealChopListener(RealChop plugin) {
+        this.plugin = plugin;
         configDetectBlockBreakLeaves = false;
         configDetectBlockBreakAll = false;
 
         String DetectBlockBreak = plugin.config.getString("DetectBlockBreak");
-        if (DetectBlockBreak.equalsIgnoreCase("log")) {
-            configDetectBlockBreakLog = true;
-        }
         if (DetectBlockBreak.equalsIgnoreCase("leaves")) {
             configDetectBlockBreakLeaves = true;
         }
