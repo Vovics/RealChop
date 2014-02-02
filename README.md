@@ -6,5 +6,7 @@ RealChop plugin for Bukkit
 [RealChop on BukkitDev](http://dev.bukkit.org/bukkit-plugins/realchop/)
 
 Originally by @Vovics
+
 Now maintained by @Lucariatias
+
 Contributions welcome!
