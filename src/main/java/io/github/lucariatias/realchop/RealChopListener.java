@@ -64,10 +64,7 @@ public class RealChopListener implements Listener {
     }
 
     private boolean isLightBlock(Material m) {
-        if (m == Material.LEAVES || m == Material.AIR || m == Material.TORCH || m == Material.LONG_GRASS || m == Material.RED_MUSHROOM || m == Material.YELLOW_FLOWER || m == Material.VINE || m == Material.SNOW || m == Material.ARROW || m == Material.COCOA || m == Material.LADDER || m == Material.WEB || m == Material.SAPLING || m == Material.WATER || m == Material.STATIONARY_WATER) {
-            return true;
-        }
-        return false;
+        return m == Material.LEAVES || m == Material.AIR || m == Material.TORCH || m == Material.LONG_GRASS || m == Material.RED_MUSHROOM || m == Material.YELLOW_FLOWER || m == Material.VINE || m == Material.SNOW || m == Material.ARROW || m == Material.COCOA || m == Material.LADDER || m == Material.WEB || m == Material.SAPLING || m == Material.WATER || m == Material.STATIONARY_WATER;
     }
 
     private HashMap<Location, Block> getNearBlocks(Location l, int radius) {
@@ -75,7 +72,7 @@ public class RealChopListener implements Listener {
         int ly = l.getBlockY();
         int lz = l.getBlockZ();
         World w = l.getWorld();
-        HashMap<Location, Block> m = new HashMap<Location, Block>();
+        HashMap<Location, Block> m = new HashMap<>();
         for (int z = lz - radius; z <= lz + radius; z++) {
             for (int x = lx - radius; x <= lx + radius; x++) {
                 for (int y = ly - radius; y <= ly + radius; y++) {
@@ -90,7 +87,7 @@ public class RealChopListener implements Listener {
         return m;
     }
 
-    float calcSpeed(float horisontalDistance, float verticalDistance, float fallingDistance, int horisontalOffset) {
+    float calcSpeed(float horisontalDistance, float verticalDistance, int horisontalOffset) {
         float speed = 0;
         if (verticalDistance > 0) {
             speed = (horisontalDistance - horisontalOffset) / (float) Math.sqrt(2 * (verticalDistance) / 0.064814);
@@ -149,9 +146,9 @@ public class RealChopListener implements Listener {
         // " x:" + direction.getX() + " z:" + direction.getZ());
         // player.sendMessage("direction: "+ direction.toString());
 
-        HashMap<Location, Block> tree = new HashMap<Location, Block>();
-        HashMap<Location, Block> solid = new HashMap<Location, Block>();
-        HashMap<Location, Block> search = new HashMap<Location, Block>();
+        HashMap<Location, Block> tree = new HashMap<>();
+        HashMap<Location, Block> solid = new HashMap<>();
+        HashMap<Location, Block> search = new HashMap<>();
         search.put(breakBlockLocation, breakBlock);
 
         // filling tree
@@ -159,15 +156,11 @@ public class RealChopListener implements Listener {
         int limit = 0;
         while (findNext) {
             findNext = false;
-            HashMap<Location, Block> newSearch = new HashMap<Location, Block>();
-            Iterator<Map.Entry<Location, Block>> searchIt = search.entrySet().iterator();
-            while (searchIt.hasNext()) {
-                Map.Entry<Location, Block> pairs = (Map.Entry<Location, Block>) searchIt.next();
+            HashMap<Location, Block> newSearch = new HashMap<>();
+            for (Map.Entry<Location, Block> pairs : search.entrySet()) {
                 Location l = pairs.getKey();
                 HashMap<Location, Block> near = getNearBlocks(l, 1);
-                Iterator<Map.Entry<Location, Block>> nearIt = near.entrySet().iterator();
-                while (nearIt.hasNext()) {
-                    Map.Entry<Location, Block> nearPairs = (Map.Entry<Location, Block>) nearIt.next();
+                for (Map.Entry<Location, Block> nearPairs : near.entrySet()) {
                     Location nearLocation = nearPairs.getKey();
                     Block nearBlock = nearPairs.getValue();
                     if (nearBlock.getType() == Material.LOG) {
@@ -223,16 +216,12 @@ public class RealChopListener implements Listener {
         limit = 0;
         while (findNext) {
             findNext = false;
-            HashMap<Location, Block> newSearch = new HashMap<Location, Block>();
-            Iterator<Map.Entry<Location, Block>> searchIt = search.entrySet().iterator();
-            while (searchIt.hasNext()) {
-                Map.Entry<Location, Block> pairs = (Map.Entry<Location, Block>) searchIt.next();
+            HashMap<Location, Block> newSearch = new HashMap<>();
+            for (Map.Entry<Location, Block> pairs : search.entrySet()) {
                 Location l = pairs.getKey();
                 // if (l == breakBlockLocation) continue;
                 HashMap<Location, Block> near = getNearBlocks(l, 1);
-                Iterator<Map.Entry<Location, Block>> nearIt = near.entrySet().iterator();
-                while (nearIt.hasNext()) {
-                    Map.Entry<Location, Block> nearPairs = (Map.Entry<Location, Block>) nearIt.next();
+                for (Map.Entry<Location, Block> nearPairs : near.entrySet()) {
                     Location nearLocation = nearPairs.getKey();
                     // if (nearLocation == breakBlockLocation) continue;
                     Block nearBlock = nearPairs.getValue();
@@ -267,12 +256,10 @@ public class RealChopListener implements Listener {
                 break;
         }
 
-        HashMap<Location, Integer> clearWay = new HashMap<Location, Integer>();
+        HashMap<Location, Integer> clearWay = new HashMap<>();
 
         // falling tree
-        Iterator<Map.Entry<Location, Block>> logIt = tree.entrySet().iterator();
-        while (logIt.hasNext()) {
-            Map.Entry<Location, Block> logPairs = (Map.Entry<Location, Block>) logIt.next();
+        for (Map.Entry<Location, Block> logPairs : tree.entrySet()) {
             Location newBlockLocation = logPairs.getKey();
             // if (newBlockLocation == breakBlockLocation) continue;
             Block logBlock = logPairs.getValue();
@@ -288,7 +275,7 @@ public class RealChopListener implements Listener {
             int verticalDistance = horisontalDistance + fallingDistance;
             // int horisontalOffset=0;
             int horisontalOffset = (int) Math.floor((horisontalDistance) / 1.5);
-            float horisontalSpeed = calcSpeed(horisontalDistance, verticalDistance, fallingDistance, horisontalOffset);
+            float horisontalSpeed = calcSpeed(horisontalDistance, verticalDistance, horisontalOffset);
             // player.sendMessage("horisontalDistance: "+ horisontalDistance +
             // " verticalDistance:" + verticalDistance + " fallingdistance " +
             // fallingDistance);
@@ -357,9 +344,9 @@ public class RealChopListener implements Listener {
                 testBlock.breakNaturally();
             } else {
                 newBlockLocation.subtract(vOffset);
-                horisontalSpeed = calcSpeed(horisontalDistance, verticalDistance, fallingDistance, 0);
+                horisontalSpeed = calcSpeed(horisontalDistance, verticalDistance, 0);
             }
-            byte face = 0;
+            byte face;
             if (Math.abs(direction.getZ()) > Math.abs(direction.getX())) {
                 face = 0x8;
             } else {
@@ -385,9 +372,7 @@ public class RealChopListener implements Listener {
         }
 
         // clear falling way
-        Iterator<Map.Entry<Location, Integer>> clearIt = clearWay.entrySet().iterator();
-        while (clearIt.hasNext()) {
-            Map.Entry<Location, Integer> clearPairs = (Map.Entry<Location, Integer>) clearIt.next();
+        for (Map.Entry<Location, Integer> clearPairs : clearWay.entrySet()) {
             Location clearBlockLocation = clearPairs.getKey();
             int clearDistance = clearPairs.getValue();
             // player.sendMessage("clearDistance: "+ clearDistance + " y:" +
@@ -406,10 +391,8 @@ public class RealChopListener implements Listener {
             return;
 
         // get blocks around tree to find leaves
-        HashMap<Location, Block> leaves = new HashMap<Location, Block>();
-        Iterator<Map.Entry<Location, Block>> logLeavesIt = tree.entrySet().iterator();
-        while (logLeavesIt.hasNext()) {
-            Map.Entry<Location, Block> logPairs = (Map.Entry<Location, Block>) logLeavesIt.next();
+        HashMap<Location, Block> leaves = new HashMap<>();
+        for (Map.Entry<Location, Block> logPairs : tree.entrySet()) {
             leaves.putAll(getNearBlocks(logPairs.getKey(), 3));
         }
 
@@ -427,9 +410,7 @@ public class RealChopListener implements Listener {
         leaves.remove(breakBlockLocation);
 
         // falling leaves
-        Iterator<Map.Entry<Location, Block>> LeavesIt = leaves.entrySet().iterator();
-        while (LeavesIt.hasNext()) {
-            Map.Entry<Location, Block> leavesPairs = (Map.Entry<Location, Block>) LeavesIt.next();
+        for (Map.Entry<Location, Block> leavesPairs : leaves.entrySet()) {
             Location leavesLocation = leavesPairs.getKey();
             Block leavesBlock = leavesPairs.getValue();
             Material leavesMaterial = leavesBlock.getType();
@@ -447,12 +428,12 @@ public class RealChopListener implements Listener {
             // (leavesBlock.getMetadata("TreeId").iterator().next().asInt()!=treeId)
             // continue;
             // }
-            float horisontalSpeed = 0;
+            float horisontalSpeed;
             int horisontalDistance = leavesLocation.getBlockY() - breakBlockLocation.getBlockY() - 1;
             if (horisontalDistance < 0)
                 horisontalDistance = 0;
             int verticalDistance = horisontalDistance + fallingDistance;
-            horisontalSpeed = calcSpeed(horisontalDistance, verticalDistance, fallingDistance, 0);
+            horisontalSpeed = calcSpeed(horisontalDistance, verticalDistance, 0);
 
             // if (verticalDistance==0 ) continue;
             if (tree.size() < 2)
