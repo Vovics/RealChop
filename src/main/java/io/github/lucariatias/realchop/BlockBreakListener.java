@@ -23,7 +23,7 @@ public class BlockBreakListener implements Listener {
     public void onBlockBreak(BlockBreakEvent event) {
         Block breakBlock = event.getBlock();
         Material breakBlockType = breakBlock.getType();
-        if (!(detectBlockBreakAll || breakBlockType == Material.LOG || (detectBlockBreakLeaves && breakBlockType == Material.LEAVES)))
+        if (!(detectBlockBreakAll || breakBlockType == Material.LOG || breakBlockType == Material.LOG_2 || (detectBlockBreakLeaves && (breakBlockType == Material.LEAVES || breakBlockType == Material.LEAVES_2))))
             return;
         Player player = event.getPlayer();
         plugin.blockBreak(breakBlock, player.getLocation());
