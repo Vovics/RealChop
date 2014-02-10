@@ -436,8 +436,9 @@ public class RealChop extends JavaPlugin {
             }
             leavesBlock.setType(Material.AIR);
             leavesBlock.removeMetadata("TreeId", this);
+            Material leavesBlockType = leavesBlock.getType();
             @SuppressWarnings("deprecation")
-            FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, Material.LEAVES, (byte) ((0x3 & leavesBlockData.getData()) | 0x8)); //TODO: Find a way to do this without using deprecated methods
+            FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, leavesBlockType, (byte) ((0x3 & leavesBlockData.getData()) | 0x8)); //TODO: Find a way to do this without using deprecated methods
             // FallingBlock blockFalling =
             // world.spawnFallingBlock(leavesLocation, Material.LEAVES,
             // (byte)(leavesBlockData | 0x4));
