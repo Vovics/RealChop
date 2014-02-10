@@ -84,7 +84,7 @@ public class RealChop extends JavaPlugin {
         Location breakBlockLocation = breakBlock.getLocation();
 
         int treeId = 0;
-        if (breakBlockType != Material.LOG)
+        if (breakBlockType != Material.LOG && breakBlockType != Material.LOG_2)
             treeId = 1;
 
         if (breakBlock.getMetadata("TreeId").iterator().hasNext()) {
@@ -146,7 +146,7 @@ public class RealChop extends JavaPlugin {
                 for (Map.Entry<Location, Block> nearPairs : near.entrySet()) {
                     Location nearLocation = nearPairs.getKey();
                     Block nearBlock = nearPairs.getValue();
-                    if (nearBlock.getType() == Material.LOG) {
+                    if (nearBlock.getType() == Material.LOG || nearBlock.getType() == Material.LOG_2) {
                         if (!tree.containsKey(nearLocation)) {
                             Boolean put = false;
                             if (treeId == 0 && nearBlock.getMetadata("TreeId").isEmpty())
@@ -165,7 +165,7 @@ public class RealChop extends JavaPlugin {
                             }
                         }
                     }
-                    if (nearBlock.getType() != Material.LOG && !isLightBlock(nearBlock.getType())) {
+                    if (nearBlock.getType() != Material.LOG && nearBlock.getType() != Material.LOG_2 && !isLightBlock(nearBlock.getType())) {
                         solid.put(nearLocation, nearBlock);
                         // player.sendMessage("SolidBlock : " +
                         // nearBlock.getType());
@@ -380,7 +380,7 @@ public class RealChop extends JavaPlugin {
         }
 
         if (tree.size() == 0) {
-            if (breakBlockType == Material.LOG) {
+            if (breakBlockType == Material.LOG || breakBlockType == Material.LOG_2) {
                 leaves.putAll(getNearBlocks(breakBlockLocation, 3));
             } else {
                 for (int i = 1; i <= 5; i++) {
@@ -399,7 +399,7 @@ public class RealChop extends JavaPlugin {
             Material leavesMaterial = leavesBlock.getType();
             // byte leavesBlockData = leavesBlock.getData();
             MaterialData leavesBlockData = leavesBlock.getState().getData();
-            if (leavesMaterial != Material.LEAVES)
+            if (leavesMaterial != Material.LEAVES && leavesMaterial != Material.LEAVES_2)
                 continue;
 
             if (treeId == 0 && !leavesBlock.getMetadata("TreeId").isEmpty())
@@ -436,8 +436,9 @@ public class RealChop extends JavaPlugin {
             }
             leavesBlock.setType(Material.AIR);
             leavesBlock.removeMetadata("TreeId", this);
+            Material leavesBlockType = leavesBlock.getType();
             @SuppressWarnings("deprecation")
-            FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, Material.LEAVES, (byte) ((0x3 & leavesBlockData.getData()) | 0x8)); //TODO: Find a way to do this without using deprecated methods
+            FallingBlock blockFalling = world.spawnFallingBlock(leavesLocation, leavesBlockType, (byte) ((0x3 & leavesBlockData.getData()) | 0x8)); //TODO: Find a way to do this without using deprecated methods
             // FallingBlock blockFalling =
             // world.spawnFallingBlock(leavesLocation, Material.LEAVES,
             // (byte)(leavesBlockData | 0x4));
@@ -474,7 +475,7 @@ public class RealChop extends JavaPlugin {
     }
 
     private boolean isLightBlock(Material m) {
-        return m == Material.LEAVES || m == Material.AIR || m == Material.TORCH || m == Material.LONG_GRASS || m == Material.RED_MUSHROOM || m == Material.YELLOW_FLOWER || m == Material.VINE || m == Material.SNOW || m == Material.ARROW || m == Material.COCOA || m == Material.LADDER || m == Material.WEB || m == Material.SAPLING || m == Material.WATER || m == Material.STATIONARY_WATER;
+        return m == Material.LEAVES || m == Material.LEAVES_2 || m == Material.AIR || m == Material.TORCH || m == Material.LONG_GRASS || m == Material.RED_MUSHROOM || m == Material.YELLOW_FLOWER || m == Material.VINE || m == Material.SNOW || m == Material.ARROW || m == Material.COCOA || m == Material.LADDER || m == Material.WEB || m == Material.SAPLING || m == Material.WATER || m == Material.STATIONARY_WATER;
     }
 
     public boolean isDetectBlockBreakLeaves() {
