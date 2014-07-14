@@ -2,6 +2,7 @@ package io.github.lucariatias.realchop;
 
 import org.bukkit.block.BlockState;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.world.StructureGrowEvent;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -14,8 +15,9 @@ public class StructureGrowListener implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onStructureGrowEvent(StructureGrowEvent event) {
+        if (event.isCancelled()) return;
         int hash = 0;
         for (int i = 0; i < event.getBlocks().size(); i++) {
             BlockState blockState = event.getBlocks().get(i);
