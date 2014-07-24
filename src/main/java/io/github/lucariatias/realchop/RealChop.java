@@ -208,7 +208,7 @@ public class RealChop extends JavaPlugin {
                     Location nearLocation = nearPairs.getKey();
                     // if (nearLocation == breakBlockLocation) continue;
                     Block nearBlock = nearPairs.getValue();
-                    if (nearBlock.getType() == Material.LOG) {
+                    if (nearBlock.getType() == Material.LOG || nearBlock.getType() == Material.LOG_2) {
                         if (tree.containsKey(nearLocation)) {
                             tree.remove(nearLocation);
                             newSearch.put(nearLocation, nearBlock);
